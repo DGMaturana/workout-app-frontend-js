@@ -1,17 +1,28 @@
 import { AppBar, Box, Button, Toolbar, Typography } from "@mui/material";
 import React from "react";
+import { useContext } from "react";
 import { Link } from "react-router-dom";
-import { useAuth } from "../../context/Auth";
+import { AuthContext, useAuth } from "../../context/Auth";
 
 const Header = () => {
-  const auth = useAuth();
+  const { user, logOut } = useContext(AuthContext);
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
         {/* <Container maxWidth="xl"> */}
         <Toolbar>
-          {auth ? (
-            <Button>Log Out</Button>
+          {user ? (
+            <>
+              <Button onClick={logOut}>
+                <Typography
+                  variant="button"
+                  color={"white"}
+                  textTransform={"none"}
+                >
+                  Logout
+                </Typography>
+              </Button>
+            </>
           ) : (
             <>
               <Button>

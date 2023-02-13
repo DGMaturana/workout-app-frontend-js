@@ -7,11 +7,12 @@ import { AuthContext } from "../context/Auth";
 const baseURL = "http://localhost:8000/api/auth/login";
 
 const LoginForm = () => {
-  const { ingresarUsuario } = useContext(AuthContext);
-  const [user, setUser] = useState(null);
+  const { logIn } = useContext(AuthContext);
   const [error, setError] = useState(null);
 
-  const handleError = (error) => {};
+  // const handleError = (error) => {
+  //   console.log("error");
+  // };
 
   const handleSubmit = async () => {
     try {
@@ -20,13 +21,16 @@ const LoginForm = () => {
         password: formik.values.password,
       });
 
-      const { data } = response;
-      ingresarUsuario(data);
+      const { usuario, token } = response.data;
+
+      logIn(usuario, token);
     } catch (error) {
       const { response } = error;
       setError(response.data.msg);
+      // handleError(error);
     }
   };
+
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -34,8 +38,7 @@ const LoginForm = () => {
     },
     onSubmit: handleSubmit,
   });
-
-  if (user) return <h2>User logeado!</h2>;
+  // if (user) return <h2>User logeado!</h2>;
 
   return (
     <Grid
@@ -65,7 +68,12 @@ const LoginForm = () => {
             onChange={formik.handleChange}
             fullWidth
           />
-          <Button id="button" variant="contained" type="submit">
+          <Button
+            id="button"
+            onClick={formik.submitForm}
+            variant="contained"
+            type="submit"
+          >
             Ingresar
           </Button>
           {error && <Alert severity="error">{error}</Alert>}
