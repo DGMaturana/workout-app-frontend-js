@@ -1,13 +1,16 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import { useFormik } from "formik";
 import { Alert, Button, FormControl, Grid, TextField } from "@mui/material";
-import { AuthContext } from "../context/Auth";
+import { useAuth } from "../context/Auth";
+// import { AuthContext } from "../context/Auth";
 
 const baseURL = "http://localhost:8000/api/auth/login";
 
 const LoginForm = () => {
-  const { logIn } = useContext(AuthContext);
+  const { login } = useAuth();
+
+  // const { logIn } = useContext(AuthContext);
   const [error, setError] = useState(null);
 
   // const handleError = (error) => {
@@ -22,8 +25,8 @@ const LoginForm = () => {
       });
 
       const { usuario, token } = response.data;
-
-      logIn(usuario, token);
+      login(usuario);
+      // logIn(usuario, token);
     } catch (error) {
       const { response } = error;
       setError(response.data.msg);

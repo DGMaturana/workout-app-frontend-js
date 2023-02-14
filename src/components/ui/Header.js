@@ -2,10 +2,10 @@ import { AppBar, Box, Button, Toolbar, Typography } from "@mui/material";
 import React from "react";
 import { useContext } from "react";
 import { Link } from "react-router-dom";
-import { AuthContext, useAuth } from "../../context/Auth";
+import { useAuth } from "../../context/Auth";
 
 const Header = () => {
-  const { user, logOut } = useContext(AuthContext);
+  const { user, logOut } = useAuth();
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
