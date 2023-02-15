@@ -1,4 +1,4 @@
-import { Navigate, Outlet, Link } from "react-router-dom";
+import { Navigate, Outlet } from "react-router-dom";
 import { useAuth } from "../../context/Auth";
 import { AppBar, Box, Button, Toolbar, Typography } from "@mui/material";
 

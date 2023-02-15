@@ -1,36 +1,30 @@
 import React from "react";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Header from "../components/ui/Header";
+import { Route, Routes } from "react-router-dom";
 import Login from "../pages/Login";
-import { ProtectedRoute } from "./PrivateRoute";
+import { HomeLayout } from "../components/ui/HomeLayout";
+import ProtectedLayout from "../components/ui/ProtectedLayout";
+import Register from "../pages/Register";
 
 const AppRouter = () => {
   return (
-    <>
-      <Header />
-      <Routes>
+    <Routes>
+      <Route element={<HomeLayout />}>
         <Route path="/" element={<h1>Home</h1>}>
           Home
         </Route>
         <Route path="/login" element={<Login />}>
           Login
         </Route>
-        {/* <PrivateRoute auth={auth}></PrivateRoute> */}
-        <Route path="/register" element={<h1>Registro</h1>}>
+        <Route path="/register" element={<Register />}>
           Registro
         </Route>
-        <Route
-          path="/profile"
-          element={
-            <ProtectedRoute>
-              <h1>Perfil</h1>
-            </ProtectedRoute>
-          }
-        >
-          Registro
+      </Route>
+      <Route element={<ProtectedLayout />}>
+        <Route path="/profile" element={<h1>Profile</h1>}>
+          Profile
         </Route>
-      </Routes>
-    </>
+      </Route>
+    </Routes>
   );
 };
 
