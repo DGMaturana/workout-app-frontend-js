@@ -10,9 +10,9 @@ import {
   Box,
 } from "@mui/material";
 import { useAuth } from "../context/Auth";
+import FormBox from "./ui/FormBox";
 
-const baseURL = "http://localhost:8000/api/auth/login";
-
+const loginUrl = `${import.meta.env.VITE_BACKEND_URL}/auth/login`;
 const LoginForm = () => {
   const { login } = useAuth();
 
@@ -24,7 +24,7 @@ const LoginForm = () => {
 
   const handleSubmit = async () => {
     try {
-      const response = await axios.post(baseURL, {
+      const response = await axios.post(loginUrl, {
         email: formik.values.email,
         password: formik.values.password,
       });
@@ -50,20 +50,12 @@ const LoginForm = () => {
   // if (user) return <h2>User logeado!</h2>;
 
   return (
-    <Box
-      component="form"
-      display={"flex"}
-      flexDirection="column"
-      sx={{
-        "& .MuiTextField-root": { marginY: 1 },
-      }}
-      noValidate
-      autoComplete="off"
-    >
+    <FormBox>
       <TextField
         id="email"
         name="email"
         value={formik.values.email}
+        placeholder="email"
         onChange={formik.handleChange}
         fullWidth
       />
@@ -71,55 +63,21 @@ const LoginForm = () => {
         id="password"
         name="password"
         type="password"
+        placeholder="password"
         value={formik.values.password}
         onChange={formik.handleChange}
         fullWidth
       />
-      <Button id="button" onClick={formik.submitForm} variant="contained">
+      <Button
+        id="button"
+        onClick={formik.submitForm}
+        variant="contained"
+        fullWidth
+      >
         Ingresar
       </Button>
       {error && <Alert severity="error">{error}</Alert>}
-    </Box>
-
-    // <Grid
-    //   container
-    //   direction={"row"}
-    //   alignItems="center"
-    //   justify="flex-end"
-    //   sx={{ height: "100%" }}
-    // >
-    //   <Grid item xs={12} align="center">
-    //     <FormControl
-    //       onSubmit={formik.handleSubmit}
-    //       sx={{ width: "20em", maxWidth: "100%" }}
-    //     >
-    //       <TextField
-    //         id="email"
-    //         name="email"
-    //         value={formik.values.email}
-    //         onChange={formik.handleChange}
-    //         fullWidth
-    //       />
-    //       <TextField
-    //         id="password"
-    //         name="password"
-    //         type="password"
-    //         value={formik.values.password}
-    //         onChange={formik.handleChange}
-    //         fullWidth
-    //       />
-    //       <Button
-    //         id="button"
-    //         onClick={formik.submitForm}
-    //         variant="contained"
-    //         type="submit"
-    //       >
-    //         Ingresar
-    //       </Button>
-    //       {error && <Alert severity="error">{error}</Alert>}
-    //     </FormControl>
-    //   </Grid>
-    // </Grid>
+    </FormBox>
   );
 };
 

@@ -1,48 +1,73 @@
 import React from "react";
-import { FormControl, Grid, TextField, Box, Button } from "@mui/material";
+import axios from "axios";
+import { useFormik } from "formik";
+
+import { TextField, Box, Button } from "@mui/material";
+import FormBox from "./ui/FormBox";
+import { useAuth } from "../context/Auth";
+
+const registerUrl = `${import.meta.env.VITE_BACKEND_URL}/usuarios`;
+const loginUrl = `${import.meta.env.VITE_BACKEND_URL}/auth/login`;
+
 const RegisterForm = () => {
+  const { login } = useAuth();
+  const handleSubmit = async () => {
+    const { nombre, email, password } = formik.values;
+
+    try {
+      const response = await axios.post(registerUrl, {
+        nombre,
+        email,
+        password,
+      });
+
+      if (response.status == 201) login();
+      const loginResponse = await axios.post(loginUrl, {
+        email,
+        password,
+      });
+
+      const { usuario, token } = response.data;
+      login(usuario);
+    } catch (error) {
+      console.log(`Error: ${error}`);
+    }
+  };
+
+  const formik = useFormik({
+    initialValues: {
+      nombre: "",
+      email: "",
+      password: "",
+    },
+    onSubmit: handleSubmit,
+  });
+
   return (
-    <Box
-      component="form"
-      display={"flex"}
-      flexDirection="column"
-      sx={{
-        "& .MuiTextField-root": { marginY: 1 },
-      }}
-      noValidate
-      autoComplete="off"
-    >
-      <TextField label="Nombre"></TextField>
-      <TextField label="Email"></TextField>
-      <TextField label="Password" type="password"></TextField>
-      <Button id="button" onClick={() => {}} variant="contained">
+    <FormBox>
+      <TextField
+        id="nombre"
+        label="Nombre"
+        value={formik.values.nombre}
+        onChange={formik.handleChange}
+      ></TextField>
+      <TextField
+        id="email"
+        label="Email"
+        value={formik.values.email}
+        onChange={formik.handleChange}
+      ></TextField>
+      <TextField
+        id="password"
+        label="Password"
+        type="password"
+        value={formik.values.password}
+        onChange={formik.handleChange}
+      ></TextField>
+      <Button id="button" onClick={formik.handleSubmit} variant="contained">
         Registrar
       </Button>
-    </Box>
-
-    // <Grid
-    //   container
-    //   direction="row"
-    //   sx={{
-    //     marginY: "2em",
-    //   }}
-    //   justifyContent="center"
-    //   alignItems="center"
-    // >
-    //   <Grid direction="column" item alignItems="center">
-    //     <Grid container direction="column" paddingBottom={4}>
-    //       <Grid item marginBottom={2}>
-    //         <TextField label="Nombre"></TextField>
-    //       </Grid>
-    //       <Grid item marginBottom={2}>
-    //        <TextField label="Nombre"></TextField>
-    //       </Grid>
-    //       <Grid item marginBottom={2}>
-    //         <TextField label="Password" type="password"></TextField>
-    //       </Grid>
-    //     </Grid>
-    //   </Grid>
-    // </Grid>
+    </FormBox>
   );
 };
 

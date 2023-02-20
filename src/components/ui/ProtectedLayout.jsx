@@ -6,7 +6,7 @@ const ProtectedLayout = () => {
   const { user, logout } = useAuth();
 
   if (!user) {
-    return <Navigate to="/dashboard/profile" />;
+    return <Navigate to="/profile" />;
   }
 
   return (

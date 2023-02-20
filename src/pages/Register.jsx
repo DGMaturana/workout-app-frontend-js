@@ -1,17 +1,14 @@
-import { Grid, Typography } from "@mui/material";
 import React from "react";
 import RegisterForm from "../components/RegisterForm";
+import Card from "../components/ui/Card";
+import PageTitle from "../components/ui/text/PageTitle";
 
 const Register = () => {
   return (
-    <Grid container direction="row" justifyContent="center" alignItems="center">
-      <Grid direction="column" item alignItems="center">
-        <Typography variant="h2" textAlign={"center"}>
-          Registro
-        </Typography>
-        <RegisterForm />
-      </Grid>
-    </Grid>
+    <Card>
+      <PageTitle>Registro</PageTitle>
+      <RegisterForm />
+    </Card>
   );
 };
 

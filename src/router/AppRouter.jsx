@@ -4,6 +4,7 @@ import Login from "../pages/Login";
 import { HomeLayout } from "../components/ui/HomeLayout";
 import ProtectedLayout from "../components/ui/ProtectedLayout";
 import Register from "../pages/Register";
+import Profile from "../pages/Profile";
 
 const AppRouter = () => {
   return (
@@ -20,7 +21,7 @@ const AppRouter = () => {
         </Route>
       </Route>
       <Route element={<ProtectedLayout />}>
-        <Route path="/profile" element={<h1>Profile</h1>}>
+        <Route path="/profile" element={<Profile />}>
           Profile
         </Route>
       </Route>
